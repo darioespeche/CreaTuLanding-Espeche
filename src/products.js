@@ -1,0 +1,38 @@
+export const products = [
+  {
+    id: "1",
+    title: "algo",
+    price: "222",
+    stock: "222",
+    description: "abcd",
+    categoria: "Deporte",
+    imageUrl: "",
+  },
+  {
+    id: "2",
+    title: "algo",
+    price: "222",
+    stock: "222",
+    description: "abcd",
+    categoria: "Deporte",
+    imageUrl: "",
+  },
+  {
+    id: "3",
+    title: "algo",
+    price: "222",
+    stock: "222",
+    description: "abcd",
+    categoria: "Deporte",
+    imageUrl: "",
+  },
+  {
+    id: "4",
+    title: "algo",
+    price: "222",
+    stock: "222",
+    description: "abcd",
+    categoria: "Deporte",
+    imageUrl: "",
+  },
+];
