@@ -1,30 +1,36 @@
-import React from "react";
+// src/components/CartWidget.jsx
+import React, { useContext } from "react";
+import { CartContext } from "../components/context/CartContext";
 
 function CartWidget() {
+  const { cart } = useContext(CartContext);
+  const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
-    <div style={styles.cartContainer}>
-      <span role="img" aria-label="carrito" style={styles.cartIcon}>
+    <div style={widgetStyles.container}>
+      <span role="img" aria-label="carrito" style={widgetStyles.icon}>
         🛒
       </span>
-      <span style={styles.cartCount}>3</span>
+      <span style={widgetStyles.count}>{totalQuantity}</span>
     </div>
   );
 }
 
-const styles = {
-  cartContainer: {
+const widgetStyles = {
+  container: {
     position: "relative",
-    cursor: "pointer",
+    display: "inline-block",
+    marginLeft: "15px",
   },
-  cartIcon: {
-    fontSize: "2.5rem",
+  icon: {
+    fontSize: "1.8rem",
   },
-  cartCount: {
+  count: {
     position: "absolute",
     top: "-5px",
     right: "-10px",
     background: "red",
-    color: "white",
+    color: "#fff",
     borderRadius: "50%",
     padding: "2px 6px",
     fontSize: "0.8rem",
