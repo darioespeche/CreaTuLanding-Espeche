@@ -1,65 +1,72 @@
-// src/pages/ItemListContainer.jsx
-import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import { products } from "../products";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig";
+import styles from "../styles/ItemListContainer.module.css";
+import IntroSection from "../components/IntroSection";
 
-function ItemListContainer({ greeting }) {
-  const { categoryId } = useParams(); // Si la ruta incluye /category/:categoryId
-  const [data, setData] = useState([]);
+const ItemListContainer = ({ greeting }) => {
+  const [products, setProducts] = useState([]);
+  const { categoryId } = useParams(); // Captura el parámetro de la URL
 
   useEffect(() => {
-    // Simula una llamada asíncrona (por ejemplo, a una API)
-    const fetchData = new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(products);
-      }, 1000);
-    });
+    const fetchProducts = async () => {
+      try {
+        const productsCollection = collection(db, "productos");
+        let snapshot;
 
-    fetchData.then((res) => {
-      if (categoryId) {
-        // Filtra los productos por categoría (asegúrate de que en products.js el campo se llame "category")
-        setData(
-          res.filter(
-            (item) => item.category.toLowerCase() === categoryId.toLowerCase()
-          )
-        );
-      } else {
-        // Si no hay categoría, muestra todos
-        setData(res);
+        // Si hay categoryId, aplicamos el filtro; sino, traemos todos los productos
+        if (categoryId) {
+          const q = query(
+            productsCollection,
+            where("category", "==", categoryId)
+          );
+          snapshot = await getDocs(q);
+        } else {
+          snapshot = await getDocs(productsCollection);
+        }
+
+        const fetchedProducts = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        setProducts(fetchedProducts);
+        console.log("Productos obtenidos:", fetchedProducts);
+      } catch (error) {
+        console.error("Error obteniendo productos:", error);
       }
-    });
-  }, [categoryId]);
+    };
+
+    fetchProducts();
+  }, [categoryId]); // Se vuelve a ejecutar cada vez que cambia categoryId
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>{greeting || "Catálogo de Experiencias"}</h1>
-      <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-        {data.map((product) => (
-          <div
-            key={product.id}
-            style={{
-              border: "1px solid #ccc",
-              padding: "10px",
-              width: "200px",
-              borderRadius: "5px",
-            }}
-          >
-            <h3>{product.title}</h3>
+    <div className={styles.container}>
+      <IntroSection />
+      <h2 className={styles.title}>
+        {greeting || "Bienvenidos a Experiencias Locales"}
+      </h2>
+      <div className={styles.grid}>
+        {products.map((product) => (
+          <div key={product.id} className={styles.card}>
             <img
+              className={styles.cardImage}
               src={product.imageUrl}
               alt={product.title}
-              width="100%"
-              style={{ marginBottom: "5px" }}
             />
-            <p>Precio: ${product.price}</p>
-            <p>{product.description}</p>
-            {/* Enlace a la vista detalle del producto */}
-            <Link to={`/item/${product.id}`}>Ver Detalle</Link>
+            <h3 className={styles.cardTitle}>{product.title}</h3>
+            <p className={styles.cardDescription}>{product.description}</p>
+            <strong className={styles.cardPrice}>${product.price}</strong>
+            <Link to={`/item/${product.id}`} className={styles.cardLink}>
+              <h5>Click aquí</h5>
+            </Link>
           </div>
         ))}
       </div>
     </div>
   );
-}
+};
 
 export default ItemListContainer;

@@ -20,7 +20,7 @@ export default function NavBar() {
         </li>
         <li>
           <Link to="/about" style={styles.link}>
-            About
+            Sobre nosotros
           </Link>
         </li>
         <li>
@@ -31,6 +31,16 @@ export default function NavBar() {
         <li>
           <Link to="/category/cultura" style={styles.link}>
             Cultura
+          </Link>
+        </li>
+        <li>
+          <Link to="/category/deporte" style={styles.link}>
+            Deporte
+          </Link>
+        </li>
+        <li>
+          <Link to="/category/naturaleza" style={styles.link}>
+            Naturaleza
           </Link>
         </li>
       </ul>

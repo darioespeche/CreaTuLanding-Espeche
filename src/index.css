@@ -6,16 +6,7 @@
 }
 
 body {
-  margin: 0;
-  padding: 0;
   font-family: sans-serif;
-  /* color de fondo y de texto, si quieres */
-  background-color: #473838;
-  color: #fff;
-  /* Evita forzar un layout con flex aquí */
-}
-
-#root {
-  width: 100%;
-  min-height: 100vh; /* si quieres que ocupe toda la pantalla vertical */
+  background-color: #f2f2f2;
+  color: #333;
 }

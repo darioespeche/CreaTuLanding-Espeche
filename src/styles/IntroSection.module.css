@@ -1,0 +1,17 @@
+.introSection {
+  background-color: #f8f6f4;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+}
+
+.paragraph {
+  line-height: 1.5;
+  color: #3d3d3d;
+}
