@@ -28,10 +28,12 @@ function CheckoutForm() {
 
     try {
       const docRef = await addDoc(collection(db, "ordenes"), order);
+      console.log("Orden generada con ID:", docRef.id);
       setOrderId(docRef.id);
       clearCart();
     } catch (error) {
       console.error("Error al generar orden:", error);
+      alert("Error: " + error.message); // Para verlo más claro
     } finally {
       setLoading(false);
     }

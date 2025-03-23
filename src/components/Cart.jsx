@@ -1,6 +1,7 @@
 // src/components/Cart.jsx
 import React, { useContext } from "react";
 import { CartContext } from "./context/CartContext";
+import { Link } from "react-router-dom";
 
 function Cart() {
   const { cart, removeItem, clearCart } = useContext(CartContext);
@@ -35,6 +36,10 @@ function Cart() {
       <button onClick={clearCart} style={cartStyles.clearButton}>
         Vaciar Carrito
       </button>
+      {/* Botón para ir al checkout */}
+      <Link to="/checkout" style={cartStyles.checkoutButton}>
+        Finalizar Compra
+      </Link>
     </div>
   );
 }
@@ -66,6 +71,17 @@ const cartStyles = {
     border: "none",
     borderRadius: "4px",
     cursor: "pointer",
+  },
+  checkoutButton: {
+    marginTop: "20px",
+    padding: "10px 20px",
+    backgroundColor: "#27ae60",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+    textDecoration: "none", // Para que luzca como botón y no subrayado
+    display: "inline-block",
   },
 };
 
